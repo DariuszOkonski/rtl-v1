@@ -42,6 +42,8 @@ function App() {
             data-testid='confirm-password'
           />
         </div>
+        {/* <p>the email you input is invalid</p> */}
+        <button>Submit</button>
       </form>
     </div>
   );
