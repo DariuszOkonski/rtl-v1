@@ -45,7 +45,69 @@ test('should show email error message on invalid email', () => {
   userEvent.type(emailInputElement, 'selenagmail.com');
 
   const submitButton = screen.getByRole('button', { name: /submit/i });
+
   userEvent.click(submitButton);
 
-  // expect(emailErrorElement).toBeInTheDocument();
+  const emailErrorElementAgain = screen.queryByText(
+    /the email you input is invalid/i
+  );
+
+  expect(emailErrorElementAgain).not.toBeInTheDocument();
+});
+
+test('should show password error if password is less than 5 characters', () => {
+  render(<App />);
+
+  const emailInputElement = screen.getByRole('textbox', { name: /email/i });
+  const passwordInputElement = screen.getByLabelText('Password');
+  const passwordErrorElement = screen.queryByText(
+    /the password you entered should contain 5 or more characters/i
+  );
+  const submitBtnElement = screen.getByRole('button', {
+    name: /submit/i,
+  });
+
+  userEvent.type(emailInputElement, 'selena@gmail.com');
+  expect(passwordErrorElement).not.toBeInTheDocument();
+
+  userEvent.type(passwordInputElement, '123');
+  userEvent.click(submitBtnElement);
+
+  const passwordErrorElementAgain = screen.queryByText(
+    /the password you entered should contain 5 or more characters/i
+  );
+
+  expect(passwordErrorElementAgain).not.toBeInTheDocument();
+});
+
+test('should show confirm password error if passwords dont mach', () => {
+  render(<App />);
+
+  const emailInputElement = screen.getByRole('textbox', {
+    name: /email/i,
+  });
+  const passwordInputElement = screen.getByLabelText('Password');
+  const confirmPasswordInputElement =
+    screen.getByLabelText(/confirm password/i);
+  const confirmPasswordErrorElement = screen.queryByText(
+    /the passwords don't match. Try again/i
+  );
+
+  expect(confirmPasswordErrorElement).not.toBeInTheDocument();
+
+  const submitBtnElement = screen.getByRole('button', {
+    name: /submit/i,
+  });
+
+  userEvent.type(emailInputElement, 'selena@gmail.com');
+  userEvent.type(passwordInputElement, '12345');
+  userEvent.type(confirmPasswordInputElement, '123456');
+
+  userEvent.click(submitBtnElement);
+
+  const confirmPasswordErrorElementAfter = screen.queryByText(
+    /the passwords don't match. Try again/i
+  );
+
+  expect(confirmPasswordErrorElementAfter).not.toBeInTheDocument();
 });
