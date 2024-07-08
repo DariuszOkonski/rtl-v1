@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import vaidator from 'validator';
 
 function App() {
+  const [signupInput, setSignInput] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleChange = (e) => {
+    setSignInput({
+      ...signupInput,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className='container my-5'>
       <form>
@@ -14,6 +32,8 @@ function App() {
             id='email'
             name='email'
             className='form-control'
+            value={signupInput.email}
+            onChange={handleChange}
           />
         </div>
 
@@ -27,6 +47,8 @@ function App() {
             name='password'
             className='form-control'
             data-testid='password'
+            value={signupInput.password}
+            onChange={handleChange}
           />
         </div>
 
@@ -37,13 +59,17 @@ function App() {
           <input
             type='password'
             id='confirm-password'
-            name='confirm-password'
+            name='confirmPassword'
             className='form-control'
             data-testid='confirm-password'
+            value={signupInput.confirmPassword}
+            onChange={handleChange}
           />
         </div>
         {/* <p>the email you input is invalid</p> */}
-        <button>Submit</button>
+        <button type='submit' className='btn btn-primary' onClick={handleClick}>
+          Submit
+        </button>
       </form>
     </div>
   );
