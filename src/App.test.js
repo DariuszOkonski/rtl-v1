@@ -33,10 +33,16 @@ const typeIntoForm = ({ email, password, confirmPassword }) => {
 };
 
 test('inputs should be initially empty', () => {
-  const emailInputElement = screen.getByRole('textbox');
-  const passwordInputElement = screen.getByLabelText('Password');
-  const confirmPasswordInputElement =
-    screen.getByLabelText(/confirm password/i);
+  // const emailInputElement = screen.getByRole('textbox');
+  // const passwordInputElement = screen.getByLabelText('Password');
+  // const confirmPasswordInputElement =
+  //   screen.getByLabelText(/confirm password/i);
+
+  const {
+    emailInputElement,
+    passwordInputElement,
+    confirmPasswordInputElement,
+  } = typeIntoForm({});
 
   expect(emailInputElement.value).toBe('');
   expect(passwordInputElement.value).toBe('');
