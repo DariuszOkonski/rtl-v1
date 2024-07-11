@@ -4,10 +4,6 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 import userEvent from '@testing-library/user-event';
 
-beforeEach(() => {
-  render(<App />);
-});
-
 const typeIntoForm = ({ email, password, confirmPassword }) => {
   const emailInputElement = screen.getByRole('textbox', { name: /email/i });
   const passwordInputElement = screen.getByLabelText('Password');
@@ -42,6 +38,10 @@ const clickOnSubmitButton = async () => {
 };
 
 describe('App', () => {
+  beforeEach(() => {
+    render(<App />);
+  });
+
   test('inputs should be initially empty', () => {
     const {
       emailInputElement,
